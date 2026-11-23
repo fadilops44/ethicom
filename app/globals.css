@@ -1696,6 +1696,14 @@ details[open]:hover .detail-plus,
   border-top: 1px solid #edf2f6;
   margin-top: 2px;
   padding-top: 22px;
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Replié : pas de marge interne résiduelle (sinon un vide reste sous la carte) */
+.detail-accordion-collapse:not(.is-expanded) .detail-accordion-body {
+  padding-block: 0;
+  margin-top: 0;
+  border-top-color: transparent;
 }
 
 .detail-body-header {
@@ -3339,9 +3347,11 @@ details[open]:hover .detail-plus,
   }
   .hero-photo-panel {
     min-height: 480px;
+    order: 2;
   }
   .hero-copy-panel {
     padding: 44px 36px 36px;
+    order: 1;
   }
   .about-grid,
   .training-grid,
@@ -3367,6 +3377,13 @@ details[open]:hover .detail-plus,
   .founder-photo-less,
   .founder-card {
     min-height: 380px;
+  }
+  /* Tablette : portrait moins haut (sinon ~1 écran entier) */
+  .founder-card {
+    aspect-ratio: 5 / 4;
+  }
+  .founder-card .cover-image {
+    object-position: center 20%;
   }
   .footer-main {
     grid-template-columns: 1fr 1fr;
@@ -3463,6 +3480,16 @@ details[open]:hover .detail-plus,
     pointer-events: auto;
   }
 
+  /* Menu ouvert : l'en-tête (qui contient le tiroir) passe au-dessus du voile,
+     et le flou de la barre est retiré pour que le tiroir se place sur l'écran entier */
+  .site-header--menu-open {
+    z-index: 160;
+  }
+  .site-header--menu-open .nav-pill {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .mobile-nav-header {
     display: flex;
     align-items: center;
@@ -3524,10 +3551,14 @@ details[open]:hover .detail-plus,
     text-align: center;
   }
 
-  .method-heading {
+  .method-heading,
+  .section-heading {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
+  }
+  .section-heading p {
+    max-width: 560px;
   }
 
   .method-grid {
@@ -3605,6 +3636,51 @@ details[open]:hover .detail-plus,
   }
   .service-card {
     min-height: 360px;
+  }
+  /* Pied de la section Expertises : empilé, sinon débordement horizontal */
+  .services-foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .services-foot .inline-link {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+  .module-item {
+    min-height: 0;
+  }
+  /* Grilles à une colonne : ne jamais s'élargir au-delà de l'écran */
+  .about-grid,
+  .training-grid,
+  .founder-layout,
+  .contact-grid,
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Boutons et liens : retour à la ligne autorisé sur petit écran */
+  .btn,
+  .inline-link {
+    white-space: normal;
+    max-width: 100%;
+  }
+  /* Carte fondateur : la hauteur mini forçait une largeur > écran (ratio) */
+  .founder-photo-less,
+  .founder-card {
+    min-height: 0;
+    width: 100%;
+  }
+  .founder-card {
+    aspect-ratio: 1 / 1.1;
+  }
+  /* Formulaire : le cadre intérieur ne double pas les marges du cadre extérieur */
+  .contact-form-wrapper .contact-form-wrapper {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    border-radius: 0;
   }
   .about-mini-card {
     position: static;

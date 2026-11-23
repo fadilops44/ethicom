@@ -65,7 +65,7 @@ export default function Header() {
         Aller au contenu principal
       </a>
 
-      <header className={`site-header ${scrolled ? "site-header--scrolled" : ""}`}>
+      <header className={`site-header ${scrolled ? "site-header--scrolled" : ""} ${open ? "site-header--menu-open" : ""}`}>
         <div className={`container-wide nav-pill ${scrolled ? "nav-pill--scrolled" : ""}`}>
           <a
             href="#accueil"
